@@ -62,7 +62,7 @@ func main() {
 	}
 
 	fmt.Println("Hello Word.")
-	fmt.Println("Licence is OK.")
+	fmt.Println("Licence OK.")
 }
 ```
 
