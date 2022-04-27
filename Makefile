@@ -9,3 +9,6 @@ clean:
 build:
 	go build -o dist/gosign cmd/main.go
 	go run cmd/main.go dist/gosign
+
+test:
+	go test ./...
