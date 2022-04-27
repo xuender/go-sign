@@ -1,5 +1,7 @@
 # gosign
 
+![gosign](https://app.travis-ci.com/xuender/gosign.svg?branch=main)
+
 Self verification after sign of golang lib.
 
 [Changelog](http://github.com/xuender/gosign/blob/master/History.md) | [中文](http://github.com/xuender/gosign/blob/master/README_CN.md)
