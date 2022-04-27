@@ -9,7 +9,7 @@ jobs:
         default: "1.18"
 
     docker:
-      - image: cimg/golang:<< parameters.go-version >>
+      - image: golang/golang:<< parameters.go-version >>alpine
 
     working_directory: /go/<< parameters.go-version >>/src/github.com/xuender/gosign
     steps:
