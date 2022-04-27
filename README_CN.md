@@ -1,20 +1,20 @@
 # gosign
 
-Self verification after sign of golang lib.
+签名后可自校验的 Go 语言类库。
 
-[Changelog](http://github.com/xuender/gosign/blob/master/History.md) | [中文](http://github.com/xuender/gosign/blob/master/README_CN.md)
+[历史](http://github.com/xuender/gosign/blob/master/History.md) | [English](http://github.com/xuender/gosign/blob/master/README.md)
 
-## Install cmd
+## 安装命令行
 
 ```shell
 go install github.com/xuender/gosign/cmd/gosign@latest
 ```
 
-## Examples
+## 例子
 
-### base
+### 完整性校验
 
-Check the integrity of the execution file to prevent tampering or virus intrusion.
+检查执行文件完整性。
 
 ```go
 package main
@@ -40,9 +40,9 @@ go build -o helloword main.go
 gosign -s=secret_key helloword
 ```
 
-### licence
+### 许可证校验
 
-Check license string.
+检查许可证。
 
 ```go
 package main
@@ -71,13 +71,13 @@ func main() {
 ```shell
 go build -o helloword main.go
 gosign -s=licence_str helloword
-# run
+# 使用许可证运行
 ./helloword licence_str
 ```
 
-### env
+### 环境变量校验
 
-Check environment variables.
+检查环境变量。
 
 ```go
 package main
@@ -101,13 +101,13 @@ func main() {
 ```shell
 go build -o helloword main.go
 SECRET_KEY=secret_key gosign -e=SECRET_KEY helloword
-# set env and run
+# 设置环境变量并运行
 SECRET_KEY=secret_key ./helloword
 ```
 
-### machine
+### 设备校验
 
-Only run on the sign machine.
+只能运行在签名的设备上。
 
 ```go
 package main
@@ -130,13 +130,13 @@ func main() {
 
 ```shell
 go build -o helloword main.go
-# sign on the final running machine
+# 在运行的设备上签名
 gosign -m helloword
 ```
 
-### complex
+### 多重校验
 
-Only run on the sign machine and has env.
+只能运行在签名的设备上，并校验环境变量。
 
 ```go
 package main
@@ -161,15 +161,15 @@ func main() {
 
 ```shell
 go build -o helloword main.go
-# sign on the final running machine
+# 在运行的设备上根据环境变量签名
 SECRET_KEY=secret_key gosign -m -e=SECRET_KEY helloword
-# set env and run
+# 设置环境变量并运行
 SECRET_KEY=secret_key ./helloword
 ```
 
-## PS
+## 说明
 
-Use gosign and Check/CheckEnv/CheckMachine must be signed, otherwise it cannot run after build.
+使用 gosign 的 Check/CheckEnv/CheckMachine 方法，编译后必须签名。
 
 ## License
 
