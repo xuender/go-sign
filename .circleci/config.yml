@@ -1,0 +1,44 @@
+version: 2.1
+
+jobs:
+  build:
+    # Define parameters for Go versions.
+    parameters:
+      go-version:
+        type: string
+        default: "latest"
+
+    docker:
+      - image: circleci/golang:<< parameters.go-version >>
+
+    working_directory: /go/<< parameters.go-version >>/src/github.com/xuender/gosign
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - go-mod-v4-{{ checksum "go.sum" }}
+
+      - run:
+          name: Install Dependencies
+          command: go get -v -t -d ./...
+
+      - save_cache:
+          key: go-mod-v4-{{ checksum "go.sum" }}
+          paths:
+            - "/go/<< parameters.go-version >>/pkg/mod"
+
+      - run:
+          name: Run tests
+          command: |
+            go version
+            go test -v ./...
+
+workflows:
+  workflow:
+    jobs:
+      - build:
+          matrix:
+            parameters:
+              go-version:
+                - "1.18"
+                - latest
