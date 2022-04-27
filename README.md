@@ -152,7 +152,7 @@ import (
 )
 
 func main() {
-	mid, _ := gosign.GetMachineSecret(os.Getenv("SECRET_KEY"))
+	mid := gosign.GetMachineSecret(os.Getenv("SECRET_KEY"))
 	if err := gosign.Check(mid); err != nil {
 		panic(err)
 	}

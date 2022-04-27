@@ -14,21 +14,20 @@ func CheckEnv(env string) error {
 	return Check(os.Getenv(env))
 }
 
-func GetMachineSecret(appID string) (string, error) {
-	if appID == "" {
-		appID = "github.com/xuender/gosign"
+func GetMachineSecret(secret string) string {
+	if secret == "" {
+		secret = ModPath
 	}
 
-	return machineid.ProtectedID(appID)
+	if mid, err := machineid.ProtectedID(secret); err == nil {
+		return mid
+	}
+
+	return secret
 }
 
 func CheckMachine() error {
-	id, err := GetMachineSecret("")
-	if err != nil {
-		return err
-	}
-
-	return Check(id)
+	return Check(GetMachineSecret(ModPath))
 }
 
 func Check(secret string) error {

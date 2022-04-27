@@ -1,14 +1,17 @@
 package gosign_test
 
-// func TestGetMachineSecret(t *testing.T) {
-// 	t.Parallel()
+import (
+	"testing"
 
-// 	mid, err := gosign.GetMachineSecret("test")
-// 	if err != nil {
-// 		t.Errorf("GetMachineSecret() error = %v, wantErr %v", err, nil)
-// 	}
+	"github.com/xuender/gosign"
+)
 
-// 	if len(mid) != 64 {
-// 		t.Errorf("GetMachineSecret() len(mid)= %v, wantErr %v", len(mid), 64)
-// 	}
-// }
+func TestGetMachineSecret(t *testing.T) {
+	t.Parallel()
+
+	mid := gosign.GetMachineSecret("test")
+
+	if len(mid) != 64 {
+		t.Errorf("GetMachineSecret() len(mid)= %v, wantErr %v", len(mid), 64)
+	}
+}

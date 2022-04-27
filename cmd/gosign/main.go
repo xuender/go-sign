@@ -36,7 +36,7 @@ func main() {
 	}
 
 	if isMachine {
-		secret = Panic1(gosign.GetMachineSecret(secret))
+		secret = gosign.GetMachineSecret(secret)
 	}
 
 	if isCheck {
