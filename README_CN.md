@@ -1,5 +1,8 @@
 # gosign
 
+[![CircleCI](https://circleci.com/gh/xuender/gosign.svg?style=shield)](https://circleci.com/gh/xuender/gosign)
+[![GoDoc](https://godoc.org/github.com/xuender/gosign?status.svg)](https://pkg.go.dev/github.com/xuender/gosign)
+
 签名后可自校验的 Go 语言类库。
 
 [历史](http://github.com/xuender/gosign/blob/master/History.md) | [English](http://github.com/xuender/gosign/blob/master/README.md)
