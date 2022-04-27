@@ -10,13 +10,15 @@ import (
 	"github.com/denisbrodbeck/machineid"
 )
 
+const modPath = "github.com/xuender/gosign"
+
 func CheckEnv(env string) error {
 	return Check(os.Getenv(env))
 }
 
 func GetMachineSecret(secret string) string {
 	if secret == "" {
-		secret = ModPath
+		secret = modPath
 	}
 
 	if mid, err := machineid.ProtectedID(secret); err == nil {
@@ -27,7 +29,7 @@ func GetMachineSecret(secret string) string {
 }
 
 func CheckMachine() error {
-	return Check(GetMachineSecret(ModPath))
+	return Check(GetMachineSecret(modPath))
 }
 
 func Check(secret string) error {
