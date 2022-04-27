@@ -14,12 +14,16 @@ func CheckEnv(env string) error {
 	return Check(os.Getenv(env))
 }
 
-func GetMachineSecret() (string, error) {
-	return machineid.ProtectedID("github.com/xuender/gosign")
+func GetMachineSecret(appID string) (string, error) {
+	if appID == "" {
+		appID = "github.com/xuender/gosign"
+	}
+
+	return machineid.ProtectedID(appID)
 }
 
 func CheckMachine() error {
-	id, err := GetMachineSecret()
+	id, err := GetMachineSecret("")
 	if err != nil {
 		return err
 	}

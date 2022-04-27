@@ -97,6 +97,39 @@ go build -o helloword main.go
 gosign -m helloword
 ```
 
+### complex
+
+Only run on the sign machine and has env.
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+
+	"github.com/xuender/gosign"
+)
+
+func main() {
+	mid, _ := gosign.GetMachineSecret(os.Getenv("SECRET_KEY"))
+	if err := gosign.Check(mid); err != nil {
+		panic(err)
+	}
+
+	fmt.Println("Hello Word.")
+	fmt.Println("Run on sign machine and has env.")
+}
+```
+
+```shell
+go build -o helloword main.go
+# sign on the final running machine
+SECRET_KEY=secret_key gosign -m -e=SECRET_KEY helloword
+# set env and run
+SECRET_KEY=secret_key ./helloword
+```
+
 ## PS
 
 Use gosign and Check/CheckEnv/CheckMachine must be signed, otherwise it cannot run after build.

@@ -9,7 +9,7 @@ import (
 func TestGetMachineSecret(t *testing.T) {
 	t.Parallel()
 
-	mid, err := gosign.GetMachineSecret()
+	mid, err := gosign.GetMachineSecret("test")
 	if err != nil {
 		t.Errorf("GetMachineSecret() error = %v, wantErr %v", err, nil)
 	}
