@@ -1,6 +1,6 @@
 # gosign
 
-Self verification of golang lib.
+Self verification after sign of golang lib.
 
 ## Install cmd
 
