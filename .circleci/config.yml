@@ -6,7 +6,7 @@ jobs:
     parameters:
       go-version:
         type: string
-        default: "latest"
+        default: "1.18"
 
     docker:
       - image: circleci/golang:<< parameters.go-version >>
@@ -41,4 +41,4 @@ workflows:
             parameters:
               go-version:
                 - "1.18"
-                - latest
+                - "1.18.1"

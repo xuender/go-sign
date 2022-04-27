@@ -1,6 +1,7 @@
 # gosign
 
-![gosign](https://app.travis-ci.com/xuender/gosign.svg?branch=main)
+[![CircleCI](https://circleci.com/gh/xuender/gosign.svg?style=shield)](https://circleci.com/gh/xuender/gosign)
+[![GoDoc](https://godoc.org/github.com/xuender/gosign?status.svg)](https://pkg.go.dev/github.com/xuender/gosign)
 
 Self verification after sign of golang lib.
 
