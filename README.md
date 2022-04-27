@@ -38,6 +38,41 @@ go build -o helloword main.go
 gosign -s=secret_key helloword
 ```
 
+### licence
+
+Check license string.
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+
+	"github.com/xuender/gosign"
+)
+
+func main() {
+	if len(os.Args) < 2 {
+		panic("Miss licence.")
+	}
+
+	if err := gosign.Check(os.Args[1]); err != nil {
+		panic("Licence FAILED.")
+	}
+
+	fmt.Println("Hello Word.")
+	fmt.Println("Licence is OK.")
+}
+```
+
+```shell
+go build -o helloword main.go
+gosign -s=licence_str helloword
+# run
+./helloword licence_str
+```
+
 ### env
 
 Check environment variables.
