@@ -9,8 +9,7 @@ import (
 
 const (
 	sumSize  = 20
-	FileMode = 0o666
-	DirMode  = 0o700
+	fileMode = 0o666
 )
 
 type Sign struct {
@@ -99,7 +98,7 @@ func (p *Sign) Sign() error {
 		return err
 	}
 
-	writer, err := os.OpenFile(p.file, os.O_RDWR|os.O_APPEND, FileMode)
+	writer, err := os.OpenFile(p.file, os.O_RDWR|os.O_APPEND, fileMode)
 	if err != nil {
 		return err
 	}
