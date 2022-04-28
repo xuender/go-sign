@@ -88,11 +88,11 @@ func errorHanlder() {
 }
 
 func usage() {
-	fmt.Fprintf(flag.CommandLine.Output(), "gosign [%s]\n\n", gosign.ModVersion)
+	fmt.Fprintf(flag.CommandLine.Output(), "gosign [%s]\n\n", gosign.Mod.Version)
 	fmt.Fprintf(flag.CommandLine.Output(), "Self verification of golang lib.\n\n")
 	fmt.Fprintf(flag.CommandLine.Output(), "usage: %s [path ...]\n", os.Args[0])
 	flag.PrintDefaults()
-	fmt.Fprintf(flag.CommandLine.Output(), "\nMod: %s\nSum: %s\n", gosign.ModPath, gosign.ModSum)
+	fmt.Fprintf(flag.CommandLine.Output(), "\nMod: %s\nSum: %s\n", gosign.Mod.Path, gosign.Mod.Sum)
 }
 
 func abs(path string) (string, error) {

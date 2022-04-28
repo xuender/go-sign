@@ -6,9 +6,7 @@ import (
 
 // nolint
 var (
-	ModVersion string
-	ModSum     string
-	ModPath    string
+	Mod *debug.Module
 )
 
 // nolint
@@ -18,17 +16,17 @@ func init() {
 		return
 	}
 
-	mod := &info.Main
+	Mod = &info.Main
 
-	if mod.Path == "" {
-		mod = info.Deps[len(info.Deps)-1]
+	if Mod.Replace != nil {
+		Mod = Mod.Replace
 	}
 
-	if mod.Replace != nil {
-		mod = mod.Replace
+	if Mod.Path == "" && len(info.Deps) > 0 {
+		Mod = info.Deps[len(info.Deps)-1]
 	}
 
-	ModVersion = mod.Version
-	ModSum = mod.Sum
-	ModPath = mod.Path
+	if Mod.Replace != nil {
+		Mod = Mod.Replace
+	}
 }

@@ -30,7 +30,7 @@ func CheckEnv(env string) error {
 }
 
 func CheckMachine() error {
-	return Check(GetMachineSecret(ModPath))
+	return Check(GetMachineSecret(Mod.Path))
 }
 
 func CheckFile(file, secret string) error {
@@ -44,7 +44,7 @@ func CheckFile(file, secret string) error {
 
 func GetMachineSecret(secret string) string {
 	if secret == "" {
-		secret = ModPath
+		secret = Mod.Path
 	}
 
 	if mid, err := machineid.ProtectedID(secret); err == nil {
