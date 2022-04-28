@@ -2,6 +2,7 @@ package gosign
 
 import (
 	"runtime/debug"
+	"strings"
 )
 
 // nolint
@@ -22,8 +23,14 @@ func init() {
 		Mod = Mod.Replace
 	}
 
-	if Mod.Path == "" && len(info.Deps) > 0 {
-		Mod = info.Deps[len(info.Deps)-1]
+	if Mod.Path == "" {
+		for _, m := range info.Deps {
+			if strings.Contains(m.Path, "gosign") {
+				Mod = m
+
+				break
+			}
+		}
 	}
 
 	if Mod.Replace != nil {
