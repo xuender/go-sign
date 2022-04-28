@@ -1,13 +1,5 @@
 # gosign
 
-[![GoCI](https://github.com/xuender/gosign/workflows/Go/badge.svg)](https://github.com/xuender/gosign/actions)
-[![Go Report Card](https://goreportcard.com/badge/github.com/xuender/gosign)](https://goreportcard.com/report/github.com/xuender/gosign)
-[![GoDoc](https://godoc.org/github.com/xuender/gosign?status.svg)](https://pkg.go.dev/github.com/xuender/gosign)
-![Gitter](https://img.shields.io/gitter/room/xuender/gosign)
-[![GitHub license](https://img.shields.io/github/license/xuender/gosign)](https://github.com/xuender/gosign/blob/main/LICENSE)
-[![GitHub issues](https://img.shields.io/github/issues/xuender/gosign)](https://github.com/xuender/gosign/issues)
-[![GitHub stars](https://img.shields.io/github/stars/xuender/gosign)](https://github.com/xuender/gosign/stargazers)
-
 签名后可自校验的 Go 语言类库。
 
 [历史](http://github.com/xuender/gosign/blob/master/History.md) | [English](http://github.com/xuender/gosign/blob/master/README.md)
