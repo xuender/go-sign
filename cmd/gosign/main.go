@@ -92,7 +92,7 @@ func usage() {
 	fmt.Fprintf(flag.CommandLine.Output(), "Self verification of golang lib.\n\n")
 	fmt.Fprintf(flag.CommandLine.Output(), "usage: %s [path ...]\n", os.Args[0])
 	flag.PrintDefaults()
-	fmt.Fprintf(flag.CommandLine.Output(), "\nMod: %s\nGit: %s\n", gosign.ModPath, gosign.ModSum)
+	fmt.Fprintf(flag.CommandLine.Output(), "\nMod: %s\nSum: %s\n", gosign.ModPath, gosign.ModSum)
 }
 
 func abs(path string) (string, error) {

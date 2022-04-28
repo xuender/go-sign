@@ -6,23 +6,24 @@ import (
 
 // nolint
 var (
-	ModVersion = "(devel)"
-	ModSum     = "00000000"
-	ModPath    = ""
+	ModVersion string
+	ModSum     string
+	ModPath    string
 )
 
 // nolint
 func init() {
-	if ModVersion != "(devel)" {
-		return
-	}
-
 	info, ok := debug.ReadBuildInfo()
 	if !ok {
 		return
 	}
 
 	mod := &info.Main
+
+	if mod.Path == "" {
+		mod = info.Deps[len(info.Deps)-1]
+	}
+
 	if mod.Replace != nil {
 		mod = mod.Replace
 	}
