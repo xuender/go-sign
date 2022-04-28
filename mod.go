@@ -25,7 +25,7 @@ func init() {
 
 	if Mod.Path == "" {
 		for _, m := range info.Deps {
-			if strings.Contains(m.Path, "gosign") {
+			if strings.HasSuffix(m.Path, "gosign") {
 				Mod = m
 
 				break

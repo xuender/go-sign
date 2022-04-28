@@ -1,7 +1,8 @@
 # gosign
 
-[![CircleCI](https://circleci.com/gh/xuender/gosign/tree/main.svg?style=svg)](https://circleci.com/gh/xuender/gosign/tree/main)
+[![GoCI](https://github.com/xuender/gosign/workflows/Go/badge.svg)](https://github.com/xuender/gosign/actions)
 [![GoDoc](https://godoc.org/github.com/xuender/gosign?status.svg)](https://pkg.go.dev/github.com/xuender/gosign)
+[![Go Report Card](https://goreportcard.com/badge/github.com/xuender/gosign)](https://goreportcard.com/report/github.com/xuender/gosign)
 
 签名后可自校验的 Go 语言类库。
 
