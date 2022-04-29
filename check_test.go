@@ -1,6 +1,7 @@
 package gosign_test
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"testing"
@@ -75,5 +76,21 @@ func TestCheckFile(t *testing.T) {
 
 	if err := gosign.CheckFile(file.Name(), "key"); err != nil {
 		t.Errorf("CheckFile() Error= %v, wantErr %v", err, nil)
+	}
+}
+
+func TestError(t *testing.T) {
+	t.Parallel()
+
+	if err := gosign.Error("test", nil); err != nil {
+		t.Errorf("Error() Error= %v, wantErr %v", err, nil)
+	}
+
+	if err := gosign.Error("test", gosign.ErrSignFailed); errors.Is(err, gosign.ErrSignFailed) {
+		t.Errorf("Error() Error= %v, wantErr %v", err, gosign.ErrSignFailed)
+	}
+
+	if err := gosign.Error("test", gosign.ErrSigned); !errors.Is(err, gosign.ErrSigned) {
+		t.Errorf("Error() Error= %v, wantErr %v", err, gosign.ErrSigned)
 	}
 }

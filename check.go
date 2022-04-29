@@ -16,7 +16,10 @@ func Check(secret string) error {
 		return nil
 	}
 
-	err := CheckFile(file, secret)
+	return Error(file, CheckFile(file, secret))
+}
+
+func Error(file string, err error) error {
 	if errors.Is(ErrSignFailed, err) {
 		// nolint
 		return fmt.Errorf("%s Sign FAILED", filepath.Base(file))

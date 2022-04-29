@@ -11,7 +11,7 @@ import (
 func TestSign(t *testing.T) {
 	t.Parallel()
 
-	file, _ := os.CreateTemp(os.TempDir(), "sing")
+	file, _ := os.CreateTemp(os.TempDir(), "sign")
 	defer os.Remove(file.Name())
 
 	_, _ = file.Write(make([]byte, 100))
