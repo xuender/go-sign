@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/xuender/gosign"
@@ -92,5 +93,25 @@ func TestError(t *testing.T) {
 
 	if err := gosign.Error("test", gosign.ErrSigned); !errors.Is(err, gosign.ErrSigned) {
 		t.Errorf("Error() Error= %v, wantErr %v", err, gosign.ErrSigned)
+	}
+}
+
+func TestIsBuild(t *testing.T) {
+	t.Parallel()
+
+	if gosign.IsBuild("/tmpfs/play") {
+		t.Errorf("IsBuild() = false")
+	}
+
+	if gosign.IsBuild(filepath.Join(os.TempDir(), "go-build123", "exe", "main")) {
+		t.Errorf("IsBuild() = false")
+	}
+
+	if gosign.IsBuild(filepath.Join(os.TempDir(), "go-build123", "main.test")) {
+		t.Errorf("IsBuild() = false")
+	}
+
+	if !gosign.IsBuild(filepath.Join("aa", "bb")) {
+		t.Errorf("IsBuild() = true")
 	}
 }

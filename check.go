@@ -12,11 +12,32 @@ import (
 
 func Check(secret string) error {
 	file := os.Args[0]
-	if strings.Contains(file, "go-build") {
-		return nil
+	if IsBuild(file) {
+		return Error(file, CheckFile(file, secret))
 	}
 
-	return Error(file, CheckFile(file, secret))
+	return nil
+}
+
+func IsBuild(file string) bool {
+	dir := filepath.Dir(file)
+	base := filepath.Base(file)
+
+	if dir == "/tmpfs" && base == "play" {
+		return false
+	}
+
+	if strings.HasPrefix(dir, os.TempDir()) && strings.Contains(dir, "go-build") {
+		if filepath.Base(dir) == "exe" {
+			return false
+		}
+
+		if filepath.Ext(base) == ".test" {
+			return false
+		}
+	}
+
+	return true
 }
 
 func Error(file string, err error) error {
