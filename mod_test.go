@@ -1,26 +1,26 @@
-package gosign_test
+package sign_test
 
 import (
 	"runtime/debug"
 	"testing"
 
-	"github.com/xuender/gosign"
+	"github.com/xuender/go-sign"
 )
 
 func TestGetMod(t *testing.T) {
 	t.Parallel()
 
-	if mod := gosign.GetMod(nil, false); mod != nil {
+	if mod := sign.GetMod(nil, false); mod != nil {
 		t.Errorf("GetMod() return= %v, wantErr %v", mod, nil)
 	}
 
 	module := debug.Module{Replace: &debug.Module{}}
 	info := &debug.BuildInfo{Main: module, Deps: []*debug.Module{{
-		Path:    "xuender/gosign",
+		Path:    "xuender/go-sign",
 		Replace: &debug.Module{},
 	}}}
 
-	if mod := gosign.GetMod(info, true); mod == nil {
+	if mod := sign.GetMod(info, true); mod == nil {
 		t.Errorf("GetMod() return= %v, wantErr %v", mod, module)
 	}
 }

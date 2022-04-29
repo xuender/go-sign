@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/xuender/gosign"
+	"github.com/xuender/go-sign"
 )
 
 func main() {
@@ -36,7 +36,7 @@ func main() {
 	}
 
 	if isMachine {
-		secret = gosign.GetMachineSecret(secret)
+		secret = sign.GetMachineSecret(secret)
 	}
 
 	if isCheck {
@@ -47,11 +47,11 @@ func main() {
 
 	for _, arg := range flag.Args() {
 		path := Panic1(abs(arg))
-		sum := gosign.NewSign(path, []byte(secret))
+		sum := sign.NewSign(path, []byte(secret))
 		base := filepath.Base(path)
 
-		if !sum.Hasgosign {
-			panic(fmt.Sprintf("file %s not use gosign.", base))
+		if !sum.HasSign {
+			panic(fmt.Sprintf("file %s not use sign.", base))
 		}
 
 		Panic(sum.Sign())
@@ -62,7 +62,7 @@ func main() {
 func check(secret string) {
 	for _, arg := range flag.Args() {
 		path := Panic1(abs(arg))
-		err := gosign.CheckFile(path, secret)
+		err := sign.CheckFile(path, secret)
 
 		if err == nil {
 			fmt.Fprintf(flag.CommandLine.Output(), "%s: sign OK.\n", filepath.Base(path))
@@ -70,7 +70,7 @@ func check(secret string) {
 			continue
 		}
 
-		if errors.Is(gosign.ErrSignFailed, err) {
+		if errors.Is(sign.ErrSignFailed, err) {
 			fmt.Fprintf(flag.CommandLine.Output(), "%s: sign Failed.\n", filepath.Base(path))
 
 			continue
@@ -82,22 +82,22 @@ func check(secret string) {
 
 func errorHanlder() {
 	if err := recover(); err != nil {
-		fmt.Fprintf(flag.CommandLine.Output(), "gosign: %v\n", err)
+		fmt.Fprintf(flag.CommandLine.Output(), "sign: %v\n", err)
 		os.Exit(1)
 	}
 }
 
 func usage() {
-	fmt.Fprintf(flag.CommandLine.Output(), "gosign [%s]\n\n", gosign.Mod.Version)
+	fmt.Fprintf(flag.CommandLine.Output(), "sign [%s]\n\n", sign.Mod.Version)
 	fmt.Fprintf(flag.CommandLine.Output(), "Self verification of golang lib.\n\n")
 	fmt.Fprintf(flag.CommandLine.Output(), "usage: %s [path ...]\n", os.Args[0])
 	flag.PrintDefaults()
-	fmt.Fprintf(flag.CommandLine.Output(), "\nMod: %s\nSum: %s\n", gosign.Mod.Path, gosign.Mod.Sum)
+	fmt.Fprintf(flag.CommandLine.Output(), "\nMod: %s\nSum: %s\n", sign.Mod.Path, sign.Mod.Sum)
 }
 
 func abs(path string) (string, error) {
 	if path == "" {
-		return "", gosign.ErrFileName
+		return "", sign.ErrFileName
 	}
 
 	if path[0] == '~' {

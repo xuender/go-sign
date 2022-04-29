@@ -1,4 +1,4 @@
-package gosign_test
+package sign_test
 
 import (
 	"errors"
@@ -7,11 +7,11 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/xuender/gosign"
+	"github.com/xuender/go-sign"
 )
 
 func ExampleCheck() {
-	if err := gosign.Check("secret_key"); err != nil {
+	if err := sign.Check("secret_key"); err != nil {
 		panic(err)
 	}
 
@@ -24,7 +24,7 @@ func ExampleCheck() {
 }
 
 func ExampleCheckEnv() {
-	if err := gosign.CheckEnv("SECRET_KEY"); err != nil {
+	if err := sign.CheckEnv("SECRET_KEY"); err != nil {
 		panic(err)
 	}
 
@@ -37,7 +37,7 @@ func ExampleCheckEnv() {
 }
 
 func ExampleCheckMachine() {
-	if err := gosign.CheckMachine(); err != nil {
+	if err := sign.CheckMachine(); err != nil {
 		panic(err)
 	}
 
@@ -52,7 +52,7 @@ func ExampleCheckMachine() {
 func TestGetMachineSecret(t *testing.T) {
 	t.Parallel()
 
-	mid := gosign.GetMachineSecret("test")
+	mid := sign.GetMachineSecret("test")
 
 	if len(mid) != 64 && len(mid) != 4 {
 		t.Errorf("GetMachineSecret() len(mid)= %v, wantErr %v", len(mid), 64)
@@ -68,14 +68,14 @@ func TestCheckFile(t *testing.T) {
 	_, _ = file.Write(make([]byte, 100))
 	file.Close()
 
-	if err := gosign.CheckFile("/tmp", "key"); err == nil {
+	if err := sign.CheckFile("/tmp", "key"); err == nil {
 		t.Errorf("CheckFile() Error= %v, wantErr %v", err, nil)
 	}
 
-	sum := gosign.NewSign(file.Name(), []byte("key"))
+	sum := sign.NewSign(file.Name(), []byte("key"))
 	_ = sum.Sign()
 
-	if err := gosign.CheckFile(file.Name(), "key"); err != nil {
+	if err := sign.CheckFile(file.Name(), "key"); err != nil {
 		t.Errorf("CheckFile() Error= %v, wantErr %v", err, nil)
 	}
 }
@@ -83,35 +83,35 @@ func TestCheckFile(t *testing.T) {
 func TestError(t *testing.T) {
 	t.Parallel()
 
-	if err := gosign.Error("test", nil); err != nil {
+	if err := sign.Error("test", nil); err != nil {
 		t.Errorf("Error() Error= %v, wantErr %v", err, nil)
 	}
 
-	if err := gosign.Error("test", gosign.ErrSignFailed); errors.Is(err, gosign.ErrSignFailed) {
-		t.Errorf("Error() Error= %v, wantErr %v", err, gosign.ErrSignFailed)
+	if err := sign.Error("test", sign.ErrSignFailed); errors.Is(err, sign.ErrSignFailed) {
+		t.Errorf("Error() Error= %v, wantErr %v", err, sign.ErrSignFailed)
 	}
 
-	if err := gosign.Error("test", gosign.ErrSigned); !errors.Is(err, gosign.ErrSigned) {
-		t.Errorf("Error() Error= %v, wantErr %v", err, gosign.ErrSigned)
+	if err := sign.Error("test", sign.ErrSigned); !errors.Is(err, sign.ErrSigned) {
+		t.Errorf("Error() Error= %v, wantErr %v", err, sign.ErrSigned)
 	}
 }
 
 func TestIsBuild(t *testing.T) {
 	t.Parallel()
 
-	if gosign.IsBuild("/tmpfs/play") {
+	if sign.IsBuild("/tmpfs/play") {
 		t.Errorf("IsBuild() = false")
 	}
 
-	if gosign.IsBuild(filepath.Join(os.TempDir(), "go-build123", "exe", "main")) {
+	if sign.IsBuild(filepath.Join(os.TempDir(), "go-build123", "exe", "main")) {
 		t.Errorf("IsBuild() = false")
 	}
 
-	if gosign.IsBuild(filepath.Join(os.TempDir(), "go-build123", "main.test")) {
+	if sign.IsBuild(filepath.Join(os.TempDir(), "go-build123", "main.test")) {
 		t.Errorf("IsBuild() = false")
 	}
 
-	if !gosign.IsBuild(filepath.Join("aa", "bb")) {
+	if !sign.IsBuild(filepath.Join("aa", "bb")) {
 		t.Errorf("IsBuild() = true")
 	}
 }

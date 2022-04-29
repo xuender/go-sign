@@ -7,8 +7,4 @@ clean:
 	rm -rf dist
 
 build:
-	go build -o dist/gosign cmd/main.go
-	go run cmd/main.go dist/gosign
-
-test:
-	go test ./...
+	go build -o dist/sign cmd/sign/main.go

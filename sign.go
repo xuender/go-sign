@@ -1,4 +1,4 @@
-package gosign
+package sign
 
 import (
 	"bytes"
@@ -13,12 +13,12 @@ const (
 )
 
 type Sign struct {
-	file      string
-	secret    []byte
-	old       []byte
-	sum       []byte
-	Error     error
-	Hasgosign bool
+	file    string
+	secret  []byte
+	old     []byte
+	sum     []byte
+	Error   error
+	HasSign bool
 }
 
 func NewSign(file string, secret []byte) *Sign {
@@ -64,7 +64,7 @@ func NewSign(file string, secret []byte) *Sign {
 	_, _ = hash.Write(secret)
 
 	ret.sum = hash.Sum(nil)
-	ret.Hasgosign = containsReader.contains
+	ret.HasSign = containsReader.contains
 
 	return ret
 }

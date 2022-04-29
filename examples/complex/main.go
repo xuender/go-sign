@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/xuender/gosign"
+	"github.com/xuender/go-sign"
 )
 
 func main() {
-	mid := gosign.GetMachineSecret(os.Getenv("SECRET_KEY"))
-	if err := gosign.Check(mid); err != nil {
+	mid := sign.GetMachineSecret(os.Getenv("SECRET_KEY"))
+	if err := sign.Check(mid); err != nil {
 		panic(err)
 	}
 

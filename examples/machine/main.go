@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/xuender/gosign"
+	"github.com/xuender/go-sign"
 )
 
 func main() {
-	if err := gosign.CheckMachine(); err != nil {
+	if err := sign.CheckMachine(); err != nil {
 		panic(err)
 	}
 
