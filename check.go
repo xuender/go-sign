@@ -11,8 +11,7 @@ import (
 )
 
 func Check(secret string) error {
-	file := os.Args[0]
-	if IsBuild(file) {
+	if file := os.Args[0]; IsBuild(file) {
 		return Error(file, CheckFile(file, secret))
 	}
 
