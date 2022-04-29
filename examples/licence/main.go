@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/xuender/gosign"
+	"github.com/xuender/go-sign"
 )
 
 func main() {
@@ -12,7 +12,7 @@ func main() {
 		panic("Miss licence.")
 	}
 
-	if err := gosign.Check(os.Args[1]); err != nil {
+	if err := sign.Check(os.Args[1]); err != nil {
 		panic("Licence FAILED.")
 	}
 

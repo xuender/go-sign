@@ -1,4 +1,4 @@
-module github.com/xuender/gosign
+module github.com/xuender/go-sign
 
 go 1.18
 

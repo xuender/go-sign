@@ -1,3 +1,3 @@
 build:
 	go build -o helloword main.go
-	gosign -s=secret_key helloword
+	sign -s=secret_key helloword

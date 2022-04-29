@@ -1,4 +1,4 @@
-package gosign
+package sign
 
 import (
 	"bytes"

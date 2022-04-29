@@ -1,13 +1,13 @@
-# gosign
+# go-sign
 
 签名后可自校验的 Go 语言类库。
 
-[历史](http://github.com/xuender/gosign/blob/master/History.md) | [English](http://github.com/xuender/gosign/blob/master/README.md)
+[历史](http://github.com/xuender/go-sign/blob/master/History.md) | [English](http://github.com/xuender/go-sign/blob/master/README.md)
 
 ## 安装命令行
 
 ```shell
-go install github.com/xuender/gosign/cmd/gosign@latest
+go install github.com/xuender/go-sign/cmd/go-sign@latest
 ```
 
 ## 例子
@@ -20,24 +20,24 @@ go install github.com/xuender/gosign/cmd/gosign@latest
 package main
 
 import (
-	"fmt"
+  "fmt"
 
-	"github.com/xuender/gosign"
+  "github.com/xuender/go-sign"
 )
 
 func main() {
-	if err := gosign.Check("secret_key"); err != nil {
-		panic(err)
-	}
+  if err := sign.Check("secret_key"); err != nil {
+    panic(err)
+  }
 
-	fmt.Println("Hello Word.")
-	fmt.Println("This file integrity.")
+  fmt.Println("Hello Word.")
+  fmt.Println("This file integrity.")
 }
 ```
 
 ```shell
 go build -o helloword main.go
-gosign -s=secret_key helloword
+sign -s=secret_key helloword
 ```
 
 ### 许可证校验
@@ -48,29 +48,29 @@ gosign -s=secret_key helloword
 package main
 
 import (
-	"fmt"
-	"os"
+  "fmt"
+  "os"
 
-	"github.com/xuender/gosign"
+  "github.com/xuender/go-sign"
 )
 
 func main() {
-	if len(os.Args) < 2 {
-		panic("Miss licence.")
-	}
+  if len(os.Args) < 2 {
+    panic("Miss licence.")
+  }
 
-	if err := gosign.Check(os.Args[1]); err != nil {
-		panic("Licence FAILED.")
-	}
+  if err := sign.Check(os.Args[1]); err != nil {
+    panic("Licence FAILED.")
+  }
 
-	fmt.Println("Hello Word.")
-	fmt.Println("Licence OK.")
+  fmt.Println("Hello Word.")
+  fmt.Println("Licence OK.")
 }
 ```
 
 ```shell
 go build -o helloword main.go
-gosign -s=licence_str helloword
+sign -s=licence_str helloword
 # 使用许可证运行
 ./helloword licence_str
 ```
@@ -83,24 +83,24 @@ gosign -s=licence_str helloword
 package main
 
 import (
-	"fmt"
+  "fmt"
 
-	"github.com/xuender/gosign"
+  "github.com/xuender/go-sign"
 )
 
 func main() {
-	if err := gosign.CheckEnv("SECRET_KEY"); err != nil {
-		panic(err)
-	}
+  if err := sign.CheckEnv("SECRET_KEY"); err != nil {
+    panic(err)
+  }
 
-	fmt.Println("Hello Word.")
-	fmt.Println("Run on safe environment.")
+  fmt.Println("Hello Word.")
+  fmt.Println("Run on safe environment.")
 }
 ```
 
 ```shell
 go build -o helloword main.go
-SECRET_KEY=secret_key gosign -e=SECRET_KEY helloword
+SECRET_KEY=secret_key sign -e=SECRET_KEY helloword
 # 设置环境变量并运行
 SECRET_KEY=secret_key ./helloword
 ```
@@ -113,25 +113,25 @@ SECRET_KEY=secret_key ./helloword
 package main
 
 import (
-	"fmt"
+  "fmt"
 
-	"github.com/xuender/gosign"
+  "github.com/xuender/go-sign"
 )
 
 func main() {
-	if err := gosign.CheckMachine(); err != nil {
-		panic(err)
-	}
+  if err := sign.CheckMachine(); err != nil {
+    panic(err)
+  }
 
-	fmt.Println("Hello Word.")
-	fmt.Println("Run on sign machine.")
+  fmt.Println("Hello Word.")
+  fmt.Println("Run on sign machine.")
 }
 ```
 
 ```shell
 go build -o helloword main.go
 # 在运行的设备上签名
-gosign -m helloword
+sign -m helloword
 ```
 
 ### 多重校验
@@ -142,37 +142,37 @@ gosign -m helloword
 package main
 
 import (
-	"fmt"
-	"os"
+  "fmt"
+  "os"
 
-	"github.com/xuender/gosign"
+  "github.com/xuender/go-sign"
 )
 
 func main() {
-	mid := gosign.GetMachineSecret(os.Getenv("SECRET_KEY"))
-	if err := gosign.Check(mid); err != nil {
-		panic(err)
-	}
+  mid := sign.GetMachineSecret(os.Getenv("SECRET_KEY"))
+  if err := sign\.Check(mid); err != nil {
+    panic(err)
+  }
 
-	fmt.Println("Hello Word.")
-	fmt.Println("Run on sign machine and has env.")
+  fmt.Println("Hello Word.")
+  fmt.Println("Run on sign machine and has env.")
 }
 ```
 
 ```shell
 go build -o helloword main.go
 # 在运行的设备上根据环境变量签名
-SECRET_KEY=secret_key gosign -m -e=SECRET_KEY helloword
+SECRET_KEY=secret_key sign -m -e=SECRET_KEY helloword
 # 设置环境变量并运行
 SECRET_KEY=secret_key ./helloword
 ```
 
 ## 说明
 
-使用 gosign 的 Check/CheckEnv/CheckMachine 方法，编译后必须签名。
+使用 sign 的 Check/CheckEnv/CheckMachine 方法，编译后必须签名。
 
 ## License
 
 © xuender, 2022~time.Now
 
-[MIT License](https://github.com/xuender/gosign/blob/master/License)
+[MIT License](https://github.com/xuender/go-sign/blob/master/License)

@@ -1,4 +1,4 @@
-package gosign
+package sign
 
 import (
 	"runtime/debug"
@@ -21,7 +21,7 @@ func GetMod(info *debug.BuildInfo, ok bool) *debug.Module {
 
 	if ret.Path == "" {
 		for _, m := range info.Deps {
-			if strings.HasSuffix(m.Path, "gosign") {
+			if strings.HasSuffix(m.Path, "go-sign") {
 				ret = m
 
 				break

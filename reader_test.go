@@ -1,11 +1,11 @@
-package gosign_test
+package sign_test
 
 import (
 	"io"
 	"os"
 	"testing"
 
-	"github.com/xuender/gosign"
+	"github.com/xuender/go-sign"
 )
 
 func TestContainsReader_Contains(t *testing.T) {
@@ -19,7 +19,7 @@ func TestContainsReader_Contains(t *testing.T) {
 
 	_, _ = file.Seek(0, 0)
 
-	reader := gosign.NewContainsReader(file, []byte{1})
+	reader := sign.NewContainsReader(file, []byte{1})
 	_, _ = io.ReadAll(reader)
 
 	if reader.Contains() {

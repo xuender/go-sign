@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/xuender/gosign"
+	"github.com/xuender/go-sign"
 )
 
 func main() {
-	if err := gosign.CheckEnv("SECRET_KEY"); err != nil {
+	if err := sign.CheckEnv("SECRET_KEY"); err != nil {
 		panic(err)
 	}
 
