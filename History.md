@@ -1,4 +1,20 @@
 
+0.0.6 / 2022-04-29
+==================
+
+* doc: gitter
+* refactor: sign
+* test: mod_test
+* test: mod_test
+* test: reader_test
+* test: reader_test
+* test: sign_test
+* test: NewSign
+* doc: codecov
+* chore: lint
+* chore: use workflows
+* Create go.yml
+
 0.0.5 / 2022-04-28
 ==================
 
