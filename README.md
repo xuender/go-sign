@@ -4,7 +4,7 @@
 [![codecov](https://codecov.io/gh/xuender/gosign/branch/main/graph/badge.svg?token=QL31K7FRZ6)](https://codecov.io/gh/xuender/gosign)
 [![Go Report Card](https://goreportcard.com/badge/github.com/xuender/gosign)](https://goreportcard.com/report/github.com/xuender/gosign)
 [![GoDoc](https://godoc.org/github.com/xuender/gosign?status.svg)](https://pkg.go.dev/github.com/xuender/gosign)
-![Gitter](https://img.shields.io/gitter/room/xuender/gosign)
+[![Gitter](https://badges.gitter.im/xuender-gosign/community.svg)](https://gitter.im/xuender-gosign/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![GitHub license](https://img.shields.io/github/license/xuender/gosign)](https://github.com/xuender/gosign/blob/main/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/xuender/gosign)](https://github.com/xuender/gosign/issues)
 [![GitHub stars](https://img.shields.io/github/stars/xuender/gosign)](https://github.com/xuender/gosign/stargazers)
