@@ -50,9 +50,7 @@ func NewSign(file string, secret []byte) *Sign {
 		return ret
 	}
 
-	if _, ret.Error = reader.Seek(0, 0); ret.Error != nil {
-		return ret
-	}
+	_, _ = reader.Seek(0, 0)
 
 	containsReader := NewContainsReader(reader, []byte(Mod.Path))
 	// nolint
@@ -84,18 +82,18 @@ func (p *Sign) Sign() error {
 		return ErrSigned
 	}
 
-	writer, err := os.OpenFile(p.file, os.O_RDWR|os.O_APPEND, fileMode)
+	file, err := os.OpenFile(p.file, os.O_RDWR|os.O_APPEND, fileMode)
 	if err != nil {
 		return err
 	}
-	defer writer.Close()
+	defer file.Close()
 
-	sum, err := p.Hash(writer)
+	sum, err := p.Hash(file)
 	if err != nil {
 		return err
 	}
 
-	_, err = writer.Write(sum)
+	_, err = file.Write(sum)
 
 	return err
 }
