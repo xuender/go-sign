@@ -7,33 +7,32 @@ import (
 
 // nolint
 var (
-	Mod *debug.Module
+	Mod = GetMod()
 )
 
-// nolint
-func init() {
+func GetMod() *debug.Module {
 	info, ok := debug.ReadBuildInfo()
 	if !ok {
-		return
+		return nil
 	}
 
-	Mod = &info.Main
+	ret := &info.Main
 
-	if Mod.Replace != nil {
-		Mod = Mod.Replace
+	if ret.Replace != nil {
+		ret = ret.Replace
 	}
 
-	if Mod.Path == "" {
+	if ret.Path == "" {
 		for _, m := range info.Deps {
 			if strings.HasSuffix(m.Path, "gosign") {
-				Mod = m
-
-				break
+				return m
 			}
 		}
 	}
 
-	if Mod.Replace != nil {
-		Mod = Mod.Replace
+	if ret.Replace != nil {
+		return ret.Replace
 	}
+
+	return ret
 }
