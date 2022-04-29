@@ -2,6 +2,7 @@ package gosign_test
 
 import (
 	"fmt"
+	"os"
 	"testing"
 
 	"github.com/xuender/gosign"
@@ -53,5 +54,26 @@ func TestGetMachineSecret(t *testing.T) {
 
 	if len(mid) != 64 && len(mid) != 4 {
 		t.Errorf("GetMachineSecret() len(mid)= %v, wantErr %v", len(mid), 64)
+	}
+}
+
+func TestCheckFile(t *testing.T) {
+	t.Parallel()
+
+	file, _ := os.CreateTemp(os.TempDir(), "check")
+	defer os.Remove(file.Name())
+
+	_, _ = file.Write(make([]byte, 100))
+	file.Close()
+
+	if err := gosign.CheckFile("/tmp", "key"); err == nil {
+		t.Errorf("CheckFile() Error= %v, wantErr %v", err, nil)
+	}
+
+	sum := gosign.NewSign(file.Name(), []byte("key"))
+	_ = sum.Sign()
+
+	if err := gosign.CheckFile(file.Name(), "key"); err != nil {
+		t.Errorf("CheckFile() Error= %v, wantErr %v", err, nil)
 	}
 }

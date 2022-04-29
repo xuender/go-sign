@@ -54,20 +54,16 @@ func NewSign(file string, secret []byte) *Sign {
 		return ret
 	}
 
-	containsReader := NewContainsReader(reader, []byte("github.com/xuender/gosign"))
+	containsReader := NewContainsReader(reader, []byte(Mod.Path))
 	// nolint
 	hash := sha1.New()
-	if _, ret.Error = hash.Write(secret); ret.Error != nil {
-		return ret
-	}
+	_, _ = hash.Write(secret)
 
 	if _, ret.Error = io.CopyN(hash, containsReader, fileInfo.Size()-sumSize); ret.Error != nil {
 		return ret
 	}
 
-	if _, ret.Error = hash.Write(secret); ret.Error != nil {
-		return ret
-	}
+	_, _ = hash.Write(secret)
 
 	ret.sum = hash.Sum(nil)
 	ret.Hasgosign = containsReader.contains
@@ -88,23 +84,14 @@ func (p *Sign) Sign() error {
 		return ErrSigned
 	}
 
-	sum, err := p.Hash()
-	if err != nil {
-		return err
-	}
-
-	fileInfo, err := os.Stat(p.file)
-	if err != nil {
-		return err
-	}
-
 	writer, err := os.OpenFile(p.file, os.O_RDWR|os.O_APPEND, fileMode)
 	if err != nil {
 		return err
 	}
 	defer writer.Close()
 
-	if _, err = writer.Seek(fileInfo.Size(), 0); err != nil {
+	sum, err := p.Hash(writer)
+	if err != nil {
 		return err
 	}
 
@@ -113,26 +100,16 @@ func (p *Sign) Sign() error {
 	return err
 }
 
-func (p *Sign) Hash() ([]byte, error) {
-	reader, err := os.Open(p.file)
-	if err != nil {
-		return nil, err
-	}
-	defer reader.Close()
+func (p *Sign) Hash(reader io.Reader) ([]byte, error) {
 	// nolint
 	hash := sha1.New()
-
-	if _, err := hash.Write(p.secret); err != nil {
-		return nil, err
-	}
+	_, _ = hash.Write(p.secret)
 
 	if _, err := io.Copy(hash, reader); err != nil {
 		return nil, err
 	}
 
-	if _, err := hash.Write(p.secret); err != nil {
-		return nil, err
-	}
+	_, _ = hash.Write(p.secret)
 
 	return hash.Sum(nil), nil
 }

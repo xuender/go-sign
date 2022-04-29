@@ -11,13 +11,14 @@ import (
 func TestSign(t *testing.T) {
 	t.Parallel()
 
-	writer, _ := os.CreateTemp(os.TempDir(), "test")
-	data := make([]byte, 100)
-	_, _ = writer.Write(data)
-	_ = writer.Close()
+	file, _ := os.CreateTemp(os.TempDir(), "sing")
+	defer os.Remove(file.Name())
 
-	secret := []byte("testkey")
-	sum := gosign.NewSign(writer.Name(), secret)
+	_, _ = file.Write(make([]byte, 100))
+	_ = file.Close()
+
+	secret := []byte("key")
+	sum := gosign.NewSign(file.Name(), secret)
 
 	if !errors.Is(sum.Check(), gosign.ErrSignFailed) {
 		t.Errorf("Check() error = %v, wantErr %v", sum.Error, gosign.ErrSignFailed)
@@ -27,7 +28,7 @@ func TestSign(t *testing.T) {
 		t.Errorf("Sign() error = %v, wantErr %v", err, nil)
 	}
 
-	sum = gosign.NewSign(writer.Name(), secret)
+	sum = gosign.NewSign(file.Name(), secret)
 	if err := sum.Sign(); !errors.Is(err, gosign.ErrSigned) {
 		t.Errorf("Sign() error = %v, wantErr %v", err, gosign.ErrSigned)
 	}
@@ -44,13 +45,13 @@ func TestNewSign_NotFile(t *testing.T) {
 func TestNewSign_SignFailed(t *testing.T) {
 	t.Parallel()
 
-	writer, _ := os.CreateTemp(os.TempDir(), "test")
-	data := make([]byte, 10)
-	_, _ = writer.Write(data)
-	_ = writer.Close()
+	file, _ := os.CreateTemp(os.TempDir(), "sign")
+	defer os.Remove(file.Name())
 
-	secret := []byte("testkey")
-	if sum := gosign.NewSign(writer.Name(), secret); sum.Error == nil {
+	_, _ = file.Write(make([]byte, 10))
+	_ = file.Close()
+
+	if sum := gosign.NewSign(file.Name(), []byte("key")); sum.Error == nil {
 		t.Errorf("NewSign() error = %v, wantErr %v", sum.Error, gosign.ErrSignFailed)
 	}
 }
@@ -58,14 +59,14 @@ func TestNewSign_SignFailed(t *testing.T) {
 func TestNewSign_ReadError(t *testing.T) {
 	t.Parallel()
 
-	writer, _ := os.CreateTemp(os.TempDir(), "test")
-	data := make([]byte, 100)
-	_, _ = writer.Write(data)
-	_ = writer.Close()
-	os.Chmod(writer.Name(), 0o266)
+	file, _ := os.CreateTemp(os.TempDir(), "sign")
+	defer os.Remove(file.Name())
 
-	secret := []byte("testkey")
-	if sum := gosign.NewSign(writer.Name(), secret); sum.Error == nil {
+	_, _ = file.Write(make([]byte, 100))
+	_ = file.Close()
+	_ = os.Chmod(file.Name(), 0o266)
+
+	if sum := gosign.NewSign(file.Name(), []byte("key")); sum.Error == nil {
 		t.Errorf("NewSign() error = %v, wantErr %v", sum.Error, "permission denied")
 	}
 }
@@ -73,15 +74,49 @@ func TestNewSign_ReadError(t *testing.T) {
 func TestNewSign_WriteError(t *testing.T) {
 	t.Parallel()
 
-	writer, _ := os.CreateTemp(os.TempDir(), "test")
-	data := make([]byte, 100)
-	_, _ = writer.Write(data)
-	_ = writer.Close()
-	os.Chmod(writer.Name(), 0o466)
+	file, _ := os.CreateTemp(os.TempDir(), "sign")
+	defer os.Remove(file.Name())
 
-	secret := []byte("testkey")
-	sum := gosign.NewSign(writer.Name(), secret)
+	_, _ = file.Write(make([]byte, 100))
+	_ = file.Close()
+	_ = os.Chmod(file.Name(), 0o466)
+
+	sum := gosign.NewSign(file.Name(), []byte("key"))
 	if err := sum.Sign(); err == nil {
 		t.Errorf("NewSign() error = %v, wantErr %v", sum.Error, "permission denied")
+	}
+}
+
+func TestSign_Hash_ReadErr(t *testing.T) {
+	t.Parallel()
+
+	sum := gosign.NewSign("/tmp", []byte("key"))
+	file, _ := os.CreateTemp(os.TempDir(), "sign")
+	_, _ = file.Write(make([]byte, 100))
+
+	defer os.Remove(file.Name())
+
+	file.Close()
+	_ = os.Chmod(file.Name(), 0o266)
+	file, _ = os.Open(file.Name())
+
+	if _, err := sum.Hash(file); err == nil {
+		t.Errorf("Sign() error = %v, wantErr %v", err, "permission denied")
+	}
+}
+
+func TestSign_Sign_Err(t *testing.T) {
+	t.Parallel()
+
+	file, _ := os.CreateTemp(os.TempDir(), "sign")
+	_, _ = file.Write(make([]byte, 100))
+
+	defer os.Remove(file.Name())
+
+	sum := gosign.NewSign(file.Name(), []byte("key"))
+	_ = os.Chmod(file.Name(), 0o466)
+
+	if err := sum.Sign(); err == nil {
+		t.Errorf("Sign() error = %v, wantErr %v", err, "permission denied")
 	}
 }
