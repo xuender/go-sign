@@ -17,7 +17,7 @@ func TestContainsReader_Contains(t *testing.T) {
 
 	_, _ = file.Write(make([]byte, 100))
 
-	file.Seek(0, 0)
+	_, _ = file.Seek(0, 0)
 
 	reader := gosign.NewContainsReader(file, []byte{1})
 	_, _ = io.ReadAll(reader)
