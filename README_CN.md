@@ -7,7 +7,7 @@
 ## 安装命令行
 
 ```shell
-go install github.com/xuender/go-sign/cmd/go-sign@latest
+go install github.com/xuender/go-sign/cmd/sign@latest
 ```
 
 ## 例子

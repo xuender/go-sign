@@ -16,7 +16,7 @@ Self verification after sign of golang lib.
 ## Install cmd
 
 ```shell
-go install github.com/xuender/go-sign/cmd/go-sign@latest
+go install github.com/xuender/go-sign/cmd/sign@latest
 ```
 
 ## Examples
