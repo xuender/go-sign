@@ -6,12 +6,9 @@ import (
 )
 
 // nolint
-var (
-	Mod = GetMod()
-)
+var Mod = GetMod(debug.ReadBuildInfo())
 
-func GetMod() *debug.Module {
-	info, ok := debug.ReadBuildInfo()
+func GetMod(info *debug.BuildInfo, ok bool) *debug.Module {
 	if !ok {
 		return nil
 	}
@@ -25,7 +22,9 @@ func GetMod() *debug.Module {
 	if ret.Path == "" {
 		for _, m := range info.Deps {
 			if strings.HasSuffix(m.Path, "gosign") {
-				return m
+				ret = m
+
+				break
 			}
 		}
 	}
