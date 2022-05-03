@@ -10,6 +10,9 @@ import (
 	"github.com/denisbrodbeck/machineid"
 )
 
+// nolint
+var Safe = "weak"
+
 func Check(secret string) error {
 	if file := os.Args[0]; IsBuild(file) {
 		return Error(file, CheckFile(file, secret))
@@ -19,6 +22,10 @@ func Check(secret string) error {
 }
 
 func IsBuild(file string) bool {
+	if Safe != "weak" {
+		return true
+	}
+
 	dir := filepath.Dir(file)
 	base := filepath.Base(file)
 

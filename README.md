@@ -176,9 +176,19 @@ SECRET_KEY=secret_key sign -m -e=SECRET_KEY helloword
 SECRET_KEY=secret_key ./helloword
 ```
 
+## Safe
+
+To enhance the security level, set the safe parameter at build time.
+
+```shell
+go build -o helloword \
+-ldflags "-X 'github.com/xuender/go-sign.Safe=strong'" \
+main.go
+```
+
 ## PS
 
-Use  sign and Check/CheckEnv/CheckMachine must be signed, otherwise it cannot run after build.
+Use sign and Check/CheckEnv/CheckMachine must be signed, otherwise it cannot run after build.
 
 ## License
 

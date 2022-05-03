@@ -167,6 +167,16 @@ SECRET_KEY=secret_key sign -m -e=SECRET_KEY helloword
 SECRET_KEY=secret_key ./helloword
 ```
 
+## 安全
+
+为了增强安全级别，编译时设置 Safe 参数。
+
+```shell
+go build -o helloword \
+-ldflags "-X 'github.com/xuender/go-sign.Safe=strong'" \
+main.go
+```
+
 ## 说明
 
 使用 sign 的 Check/CheckEnv/CheckMachine 方法，编译后必须签名。
